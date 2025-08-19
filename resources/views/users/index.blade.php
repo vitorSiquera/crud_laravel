@@ -21,9 +21,13 @@
     @forelse ($users as $user)
        ID: {{ $user->id }}<br>
        Nome: {{ $user->name }}<br>
-       Email: {{ $user->email }}<br><hr>
+       Email: {{ $user->email }}<br>
+       <a href="{{ route('user.show', ['user' => $user->id]) }}">visualizar</a>
 
-    @empty   
+       <hr>
+
+    @empty
+       <p>Nenhum usuário encontrado.</p>
     @endforelse
 </body>
 </html>
