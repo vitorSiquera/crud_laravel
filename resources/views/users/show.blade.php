@@ -9,6 +9,14 @@
 <body>
     <a href="{{ route('user.index') }}">Listar Usuario</a><br>
     <a href="{{ route('user.edit', ['user' => $user->id]) }}">editar</a>
+    <form method="POST" action="{{ route('user.destroy', ['user' => $user->id]) }}">
+        @csrf
+        @method('delete')
+        <button type="submit" onclick="return confirm('Tem certeza que deseja excluir este usuário?')">Deletar</button>
+
+
+    </form>
+
 
      @if (session('success'))
         <p style="color: green;">
