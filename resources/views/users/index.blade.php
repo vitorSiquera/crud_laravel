@@ -23,6 +23,7 @@
        Nome: {{ $user->name }}<br>
        Email: {{ $user->email }}<br>
        <a href="{{ route('user.show', ['user' => $user->id]) }}">visualizar</a>
+       <a href="{{ route('user.edit', ['user' => $user->id]) }}">editar</a>
 
        <hr>
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
 use App\Models\User;
+use PhpParser\Node\Expr\FuncCall;
 
 class UserController extends Controller
 {
@@ -39,5 +40,22 @@ class UserController extends Controller
         return redirect()->route('user.index')->with('success', 'Usuário criado com sucesso!');
     }
 
-    
+    public function edit(User $user)
+    {
+        return view('users.edit', ['user' => $user]);
+    }
+
+    public function update(UserRequest $request, User $user)
+    {
+        $request->validated();
+
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+        ]);
+
+        return redirect()->route('user.show', ['user' => $user->id])->with('success', 'Usuário atualizado com sucesso!');
+    }
+
 }
