@@ -1,42 +1,58 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Laravel</title>
-</head>
-<body>
+@extends('layouts.admin')
 
-    <a href="{{ route('user.create') }}">Criar Usuario</a><br>
+@section('content')  
 
-    <h2>Listar Usuarios</h2>
+<div class="card mb-4 border-light shadow mt-5">
 
-    @if (session('success'))
-        <p style="color: green;">
-            {{ session('success') }}
-        </p>
-    @endif
-    
-    @forelse ($users as $user)
-       ID: {{ $user->id }}<br>
-       Nome: {{ $user->name }}<br>
-       Email: {{ $user->email }}<br>
-       <a href="{{ route('user.show', ['user' => $user->id]) }}">visualizar</a>
-       <a href="{{ route('user.edit', ['user' => $user->id]) }}">editar</a>
-       {{-- <a href="{{ route('user.destroy', ['user' => $user->id]) }}">deletar</a> --}}
-       <form method="POST" action="{{ route('user.destroy', ['user' => $user->id]) }}">
-           @csrf
-           @method('delete')
-           <button type="submit" onclick="return confirm('Tem certeza que deseja excluir este usuário?')">Deletar</button>
+        <div class="card-header hstack gap-2 ">
+            <span>
+                <h2>Listar Usuarios</h2>
+            </span>
+            <span class="ms-auto ">
+                <a href="{{ route('user.create') }}" class="btn btn-success">Cadastrar</a>
+            </span>
+        </div> 
+        
+    <div class="card-body">
+
+        <x-alert />
+
+        <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Email</th>
+            <th scope="col">Ações</th>
+            </tr>
+        </thead>
+        
+
+            @forelse ($users as $user)
 
 
-       </form>
+            <tr>
+                <th scope="row"> {{ $user->id }}</th>
+                <td>{{ $user->name }}</td>
+                <td>{{ $user->email }}</td>
+                <td>
+                    <a href="{{ route('user.show', ['user' => $user->id]) }}" class="btn btn-primary">visualizar</a>
+                    <a href="{{ route('user.edit', ['user' => $user->id]) }}" class="btn btn-secondary">editar</a>
+                    <form method="POST" action="{{ route('user.destroy', ['user' => $user->id]) }}" style="display:inline;">
+                        @csrf
+                        @method('delete')
+                        <button type="submit" onclick="return confirm('Tem certeza que deseja excluir este usuário?')" class="btn btn-danger">Deletar</button>
+                    </form>
 
-       <hr>
+                </td>
+                </tr>         
 
-    @empty
-       <p>Nenhum usuário encontrado.</p>
-    @endforelse
-</body>
-</html>
+        @empty
+        <p>Nenhum usuário encontrado.</p>
+        @endforelse
+        </tbody>
+    </table>
+
+    </div>
+</div>
+@endsection

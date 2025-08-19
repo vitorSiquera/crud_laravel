@@ -1,41 +1,73 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-     <a href="{{ route('user.index') }}">Listar</a><br>
-    <a href="{{ route('user.show', ['user' => $user->id]) }}">visualizar</a><br>
-    <h2>editar Usuario</h2>
+@extends('layouts.admin')
 
-    @if ($errors->any())
-        <p style="color: red">
-        @foreach ($errors->all() as $error)
-            {{ $error }}
-        @endforeach
-        </p>
-    @endif
+@section('content')  
+<div class="card mb-4 border-light shadow mt-5">
+    <div class="card-header hstack gap-2">
+        <h2 class="mb-0">Editar Usuário</h2>
+        <div class="ms-auto">
+            <a href="{{ route('user.index') }}" class="btn btn-info btn-sm">Listar</a>
+            <a href="{{ route('user.show', ['user' => $user->id]) }}" class="btn btn-primary btn-sm">Visualizar</a>
+        </div>
+    </div>
 
-    <form action="{{ route('user.update', ['user' => $user->id]) }}" method="POST">
-        @csrf
-        @method('PUT')
-        <label for="name">Nome:</label>
-        <input type="text" id="name" name="name"  value="{{ old('name', $user->name) }}" placeholder="Digite seu nome">
-        <br>
-        <br>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" value="{{ old('email', $user->email) }}" placeholder="Digite seu email" required>
-        <br>
-        <br>
-        <label for="senha">Senha:</label>
-        <input type="password" name="password" placeholder="Digite sua senha" required>
-        <br>
-        <br>
-        <button type="submit">Atualizar</button>
-    </form>
+    <div class="card-body">
+        <x-alert />
 
-</body>
-</html>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <form action="{{ route('user.update', ['user' => $user->id]) }}" method="POST" class="row g-3">
+            @csrf
+            @method('PUT')
+
+            <div class="col-12 col-md-6">
+                <label for="name" class="form-label">Nome</label>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value="{{ old('name', $user->name) }}"
+                    placeholder="Digite o nome"
+                    class="form-control @error('name') is-invalid @enderror">
+                @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+
+            <div class="col-12 col-md-6">
+                <label for="email" class="form-label">Email</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value="{{ old('email', $user->email) }}"
+                    placeholder="Digite o e-mail"
+                    class="form-control @error('email') is-invalid @enderror">
+                @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+
+            <div class="col-12 col-md-6">
+                <label for="password" class="form-label">
+                    Senha 
+                </label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Nova senha (opcional)"
+                    class="form-control @error('password') is-invalid @enderror">
+                @error('password') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Atualizar</button>
+            </div>
+        </form>
+    </div>
+</div>
+@endsection
