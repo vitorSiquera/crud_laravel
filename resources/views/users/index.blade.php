@@ -24,6 +24,14 @@
        Email: {{ $user->email }}<br>
        <a href="{{ route('user.show', ['user' => $user->id]) }}">visualizar</a>
        <a href="{{ route('user.edit', ['user' => $user->id]) }}">editar</a>
+       {{-- <a href="{{ route('user.destroy', ['user' => $user->id]) }}">deletar</a> --}}
+       <form method="POST" action="{{ route('user.destroy', ['user' => $user->id]) }}">
+           @csrf
+           @method('delete')
+           <button type="submit" onclick="return confirm('Tem certeza que deseja excluir este usuário?')">Deletar</button>
+
+
+       </form>
 
        <hr>
 
