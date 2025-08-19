@@ -8,7 +8,22 @@
 </head>
 <body>
 
+    <a href="{{ route('user.create') }}">Criar Usuario</a><br>
+
     <h2>Listar Usuarios</h2>
+
+    @if (session('success'))
+        <p style="color: green;">
+            {{ session('success') }}
+        </p>
+    @endif
     
+    @forelse ($users as $user)
+       ID: {{ $user->id }}<br>
+       Nome: {{ $user->name }}<br>
+       Email: {{ $user->email }}<br><hr>
+
+    @empty   
+    @endforelse
 </body>
 </html>
