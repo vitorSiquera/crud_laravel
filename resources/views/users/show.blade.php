@@ -8,6 +8,13 @@
 </head>
 <body>
     <a href="{{ route('user.index') }}">Listar Usuario</a><br>
+    <a href="{{ route('user.edit', ['user' => $user->id]) }}">editar</a>
+
+     @if (session('success'))
+        <p style="color: green;">
+            {{ session('success') }}
+        </p>
+    @endif
 
     <h2>visualizar Usuario</h2>
 

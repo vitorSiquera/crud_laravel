@@ -21,9 +21,10 @@ class UserRequest extends FormRequest
      */
     public function rules(): array
     {
+        $userId = $this->route('user');
         return [
             'name' => 'required|max:255',
-            'email' => 'required|email|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . ($userId ? $userId->id : 'NULL'),
             'password' => 'required|min:8',
         ];
     }
@@ -34,6 +35,7 @@ class UserRequest extends FormRequest
             'name.required' => 'O nome é obrigatório.',
             'email.required' => 'O email é obrigatório.',
             'email.email' => 'O email deve ser um endereço de email válido.',
+            'email.unique' => 'O email já está em uso.',
             'password.required' => 'A senha é obrigatória.',
         ];
     }
