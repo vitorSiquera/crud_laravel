@@ -29,6 +29,10 @@
             <li><a href="{{ route('user.index') }}" class="nav-link px-2 text-white">Usuarios</a></li>            
             
         </ul>
+
+        <div class="text-end">
+            <a href="{{ route('login.destroy') }}" type="button" class="btn btn-outline-light me-2">Sair</a>
+        </div>
         
     </div>
     </header>
