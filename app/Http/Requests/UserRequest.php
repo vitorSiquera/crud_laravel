@@ -25,7 +25,7 @@ class UserRequest extends FormRequest
         return [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users,email,' . ($userId ? $userId->id : 'NULL'),
-            'password' => 'required|min:8',
+            'password' => 'required|confirmed|min:8',
         ];
     }
 
@@ -37,6 +37,8 @@ class UserRequest extends FormRequest
             'email.email' => 'O email deve ser um endereço de email válido.',
             'email.unique' => 'O email já está em uso.',
             'password.required' => 'A senha é obrigatória.',
+            'password.confirmed' => 'A senha não corresponde.',
+            'password.min' => 'A senha com no minimo :min caracteres',
         ];
     }
 }
