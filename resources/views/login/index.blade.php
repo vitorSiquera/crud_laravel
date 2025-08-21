@@ -1,6 +1,5 @@
 @extends('layouts.auth');
 
-
 @section('content')
     <main class="form-signin w-100 m-auto text-center bg-light rounded">
         
@@ -28,9 +27,9 @@
                 </div>
 
             <button class="btn btn-primary w-100 py-2  mb-4" type="submit">Sign in</button>
-            
-            <a href="" class="text-decoration-none">Cadastrar</a>
-            
+
+            <a href="{{ route('login.create-user') }}" class="text-decoration-none">Cadastrar</a>
+
         </form>
     </main>
 

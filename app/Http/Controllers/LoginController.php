@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -36,5 +37,33 @@ class LoginController extends Controller
     {
         Auth::logout();
         return redirect()->route('login')->with('success', 'Perfil deslogado');
+    }
+
+    public function create()
+    {
+        return view('login.create');
+    }
+
+    public function store(LoginRequest $request)
+    {
+        $request->validated();
+
+        DB::beginTransaction();
+
+        try {
+            User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),                   
+        ]);
+
+        DB::commit();
+
+        return redirect()->route('login')->with('success', 'Usuário criado com sucesso!');
+
+    } catch (Exception $e) {
+        DB::rollBack();
+        return back()->withInput()->withErrors(['error' => 'Erro ao criar usuário: ' . $e->getMessage()]);
+        }
     }
 }
