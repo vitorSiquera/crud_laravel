@@ -8,6 +8,8 @@
 
 
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 </head>
 <body>
 
@@ -24,10 +26,8 @@
         <!-- Menu de Navegação -->
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
             <li><a href="{{ route('user.index') }}" class="nav-link px-2 text-white">Home</a></li>
-            <li><a href="{{ route('user.index') }}" class="nav-link px-2 text-white">Usuarios</a></li>
-            <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
-            <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
-            <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+            <li><a href="{{ route('user.index') }}" class="nav-link px-2 text-white">Usuarios</a></li>            
+            
         </ul>
         
     </div>

@@ -50,25 +50,38 @@
                 @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
             </div>
 
-            <div class="col-12 col-md-6">
-                <label for="password" class="form-label">Senha</label>
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    placeholder="Defina a senha"
-                    class="form-control @error('password') is-invalid @enderror">
-                @error('password') <div class="invalid-feedback">{{ $message }}</div> @enderror
-            </div>
+                <div class="col-12 col-md-6">
+                    <label for="password" class="form-label">Senha</label>
+                    <div class="input-group">
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Defina a senha"
+                            class="form-control @error('password') is-invalid @enderror">
+                        <span class="input-group-text" role="button" onclick="togglePassword('password', this)">
+                            <i class="bi bi-eye-fill"></i>
+                        </span>
+                    </div>                
+                    @error('password') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                </div>
 
-            <div class="col-12 col-md-6">
-                <label for="password_confirmation" class="form-label">Confirmar Senha</label>
-                <input
-                    type="password"
-                    id="password_confirmation"
-                    name="password_confirmation"
-                    placeholder="Repita a senha"
-                    class="form-control">
+                <div class="col-12 col-md-6">
+                    <label for="password_confirmation" class="form-label">Confirmar Senha</label>
+                    <div class="input-group">
+                        <input
+                            type="password"
+                            id="password_confirmation"
+                            name="password_confirmation"
+                            placeholder="Repita a senha"
+                            class="form-control">                    
+                        <span class="input-group-text" role="button"
+                            onclick="togglePassword('password_confirmation', this)">
+                            <i class="bi bi-eye-fill"></i>
+                        </span>
+                    </div>
+                </div>
+                
             </div>
 
             <div class="col-12">
