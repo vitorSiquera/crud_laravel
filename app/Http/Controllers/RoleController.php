@@ -47,9 +47,9 @@ class RoleController extends Controller
     public function edit(Role $role)
     {
         $permissions = Permission::query()->orderBy('name')->get();
-        
-        return view('groups.edit', compact('role', 'permissions'));
-    }   
+        $selected = $role->permissions->pluck('name')->toArray();
+        return view('groups.edit', compact('role', 'permissions', 'selected'));
+    }
 
     public function update(Role $role, Request $request){
         $data = $request->validate([

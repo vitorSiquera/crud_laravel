@@ -25,7 +25,13 @@
   <label class="form-label">Nome</label>
   <input class="form-control" name="name" value="{{ old('name',$role->name) }}" required>
       </div>
-  <!-- Adicione aqui outros campos necessários para edição de grupo, se houver -->
+    
+      <h5 class="mt-4">Permissões</h5>
+      @include('groups._permissions', [
+        'permissions' => $permissions, 
+        'selected' => old('permissions', $selected ?? [])
+      ])
+
     </div>
   </div>
   <div class="card-footer d-flex gap-2">

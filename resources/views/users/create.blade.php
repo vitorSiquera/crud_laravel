@@ -50,6 +50,23 @@
                 @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
             </div>
 
+            <div class="col-12 col-md-6">
+                <label for="role" class="form-label">Grupo (role)</label>
+                <select
+                    id="role"
+                    name="role"
+                    class="form-select @error('role') is-invalid @enderror">
+                    <option value="">-- selecione --</option>
+                    @foreach($roles as $value => $label)
+                        <option value="{{ $value }}" @selected(old('role')===$value)>
+                            {{ $label }}
+                        </option>
+                    @endforeach
+                </select>
+                <div class="form-text">Opcional. Se vazio, o usuário será criado sem grupo.</div>
+                @error('role') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+
                 <div class="col-12 col-md-6">
                     <label for="password" class="form-label">Senha</label>
                     <div class="input-group">
