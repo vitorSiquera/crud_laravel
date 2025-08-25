@@ -51,4 +51,20 @@ class RoleController extends Controller
         return view('groups.edit', compact('role', 'permissions'));
     }   
 
+    public function update(Role $role, Request $request){
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:100', 'unique:roles,name,' . $role->id],
+            'permissions' => ['array']
+        ]);
+        $role->update(['name' => $data['name']]);
+        $role->syncPermissions($data['permissions'] ?? []);
+        return redirect()->route('groups.index')->with('ok', 'Grupo atualizado com sucesso.');
+    }
+
+
+    public function destroy(Role $role)
+    {
+        $role->delete();
+        return redirect()->route('groups.index')->with('ok', 'Grupo excluído com sucesso.');
+    }
 }
