@@ -26,6 +26,7 @@ class UserRequest extends FormRequest
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users,email,' . ($userId ? $userId->id : 'NULL'),
             'password' => 'required|confirmed|min:8',
+            'role' => 'nullable|string|exists:roles,name',
         ];
     }
 

@@ -25,18 +25,22 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('users.create');
+        $roles = Role::orderBy('name')->pluck('name','name');
+        return view('users.create', compact('roles'));
     }
 
     public function store(UserRequest $request)
     {
-       $request->validated();
-        
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password,
+        $data = $request->validated();
+        $user = \App\Models\User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
         ]);
+
+        if (isset($data['role'])) {
+            $user->syncRoles([$data['role']]);
+        }
 
         return redirect()->route('user.index')->with('success', 'Usuário criado com sucesso!');
     }
@@ -44,27 +48,27 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $roles = Role::orderBy('name')->pluck('name','name');
-        return view('users.edit', compact('user','roles'));
+        $currentRole = $user->getRoleNames()->first();
+        return view('users.edit', compact('user','roles', 'currentRole'));
     }
 
     public function update(UserRequest $request, User $user)
     {
-        $request->validated();
-
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password,
+        $data = $request->validated([
+            'name' => ['required', 'string', 'max:100'],
+            'email' => ['required', 'string', 'email', 'max:100', 'unique:users,email,' . $user->id],
             'role' => ['nullable', 'string', 'exists:roles,name']
         ]);
 
-        $user->fill($data)->save();
+        $user->fill([
+            'name' => $data['name'],
+            'email' => $data['email'],
+        ])->save();
 
-        if (isset($data['role'])) {
-            $user->assignRoles($data['role']);
-        } 
-        // return back()->route('user.show', ['user' => $user->id])->with('success', 'Usuário atualizado com sucesso!');
-        
+        if (array_key_exists('role', $data)) {
+            $user->syncRoles([$data['role'] ? $data['role'] : []]);
+        }
+
         return back()->with('ok','Usuário atualizado.');
     }
 
