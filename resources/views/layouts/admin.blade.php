@@ -26,7 +26,8 @@
         <!-- Menu de Navegação -->
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
             <li><a href="{{ route('user.index') }}" class="nav-link px-2 text-white">Home</a></li>
-            <li><a href="{{ route('user.index') }}" class="nav-link px-2 text-white">Usuarios</a></li>            
+            <li><a href="{{ route('user.index') }}" class="nav-link px-2 text-white">Usuarios</a></li>
+            <li><a href="{{ route('groups.index') }}" class="nav-link px-2 text-white">Grupos de Usuarios</a></li>              
             
         </ul>
 
